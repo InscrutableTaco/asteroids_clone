@@ -39,13 +39,25 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-        print(player)  # This should print something like <Player object at 0x...>
+        #print(player)  # This should print something like <Player object at 0x...>
+        print(isinstance(player, CircleShape))
+
+        print(player.__class__)
+        print(player.__class__.__bases__)
+
+        player.test_method()
         screen.fill(000000, rect=None, special_flags=0)
 
 
         updatable.update(dt)
         for entity in drawable:
             entity.draw(screen)
+
+        for asteroid in asteroids:
+            if player.check_collision(asteroid):
+                print("Game over!")
+                import sys
+                sys.exit()
 
         if print_debug == True:
             print(f"player position = {player.position}")
