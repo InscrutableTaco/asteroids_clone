@@ -6,6 +6,7 @@ from constants import *
 from player import *
 from asteroid import *
 from asteroidfield import *
+from shot import *
 
 
 
@@ -18,10 +19,12 @@ def main():
     drawable = pygame.sprite.Group()
     updatable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
+    shots = pygame.sprite.Group()
 
     Player.containers = (drawable, updatable)
     Asteroid.containers = (drawable, updatable, asteroids)
     AsteroidField.containers = (updatable)
+    Shot.containers = (drawable, updatable, shots)
 
 
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -48,6 +51,11 @@ def main():
         player.test_method()
         screen.fill(000000, rect=None, special_flags=0)
 
+        keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_SPACE]:
+            shot = player.shoot()
+            shots.add(shot)
 
         updatable.update(dt)
         for entity in drawable:
